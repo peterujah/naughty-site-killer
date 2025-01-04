@@ -52,13 +52,14 @@ class NaughtySiteKiller
     /**
      * Handle the incoming request and process the specified action.
      * 
-     * @param string|null $handler The handler file to remove during self-deletion (e.g, `__FILE__`).
-     *              This is required only if the class and handler is not in the same file.
+     * @param string|null $handlerFile The handler file to remove during self-deletion (e.g, `__FILE__`).
+     *              This is required only if the class and handler are not in the same file.
+     * 
      * @return void
      */
-    public function run(?string $handler = null): void
+    public function run(?string $handlerFile = null): void
     {
-        $this->handlerFile = $handler;
+        $this->handlerFile = $handlerFile;
 
         if (!$this->isValidToken($this->getAuth())) {
             $this->response('Unauthorized: Invalid token.', 401);
