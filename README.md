@@ -51,18 +51,18 @@ Place the `NaughtySiteKiller` handler on the public directory of the website whe
 
 **Example Usage**:
 ```php
-// path/to/public_html/psk.php 
+// path/to/public_html/naughty.php 
 <?php
 use \PeterUjah\NaughtySiteKiller;
 
 // Run script without interruptions. 
 NaughtySiteKiller::uninterrupted();
 
-$psk = new NaughtySiteKiller('<your-secure-bearer-hashed-token-here>');
+$naughty = new NaughtySiteKiller('<your-secure-bearer-hashed-token-here>');
 try {
-    $psk->run();  // Run the script based on incoming HTTP request
+    $naughty->run();  // Run the script based on incoming HTTP request
 } catch (Exception $e) {
-    $psk->response("Unknown error occurred: {$e->getMessage()}", 500);  // Handle errors
+    $naughty->response("Unknown error occurred: {$e->getMessage()}", 500);  // Handle errors
 }
 ```
 
