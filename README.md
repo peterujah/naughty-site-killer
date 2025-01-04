@@ -33,6 +33,8 @@ $password = 'super_secret_password';
 echo hash('sha256', $password);  // Outputs the hashed token
 ```
 
+---
+
 #### 2. Handling the Incoming Request
 
 Place the `NaughtySiteKiller` handler on the public directory of the website where it can be accessed through HTTP requests. This handler will process incoming requests, validate the authorization token, check the requested action (`kill`, `execute`, `template`, `self-key`), and execute the appropriate method.
@@ -41,7 +43,7 @@ Place the `NaughtySiteKiller` handler on the public directory of the website whe
 ```php
 // path/to/public_html/psk.php 
 <?php
-use \NaughtySiteKiller;
+use \PeterUjah\NaughtySiteKiller;
 
 $psk = new NaughtySiteKiller('<your-secure-bearer-hashed-token-here>');
 try {
@@ -53,7 +55,7 @@ try {
 
 > **Note**: Replace `<your-secure-bearer-hashed-token-here>` with the hashed token you generated in the previous step.
 
---
+---
 
 ### Payload Fields
 
@@ -107,7 +109,9 @@ curl -X POST http://your-server-url/naughty.php \
         }'
 ```
 
-### 1. Execute Action (Run custom code on the server—because we trust you)
+---
+
+### 2. Execute Action (Run custom code on the server—because we trust you)
 
 The Execute Action allows you to send custom PHP code to be executed on the server. It's like a magic wand for your commands.
 
@@ -132,13 +136,15 @@ This will execute the PHP code and you will receive the following response:
 }
 ```
 
+---
+
 #### Explanation:
 
 - `action`: Set to `"kill"` to trigger the kill action.
 - `phpContents`: Content for the `template.php` file.
 - `htmlContents`: Content for the `template.html` file.
 
-### 2. Template Action Request (Creates template files and updates `.htaccess`)
+### 3. Template Action Request (Creates template files and updates `.htaccess`)
 
 ```bash
 curl -X POST http://your-server-url/naughty.php \
@@ -159,7 +165,9 @@ curl -X POST http://your-server-url/naughty.php \
 - `name`: Custom name for the template file (`custom_template.php`).
 - `htaccess`: Custom `.htaccess` content to redirect all requests to the template.
 
-### 3. **Self-Key Action Request (Reserved for future use)**
+---
+
+### 4. **Self-Key Action Request (Reserved for future use)**
 
 ```bash
 curl -X POST http://your-server-url/naughty.php \
