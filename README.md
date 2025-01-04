@@ -9,7 +9,7 @@ Ah, the joy of building a website for a "naughty" client who refuses to pay afte
 #### Key Features:
 1. **Authentication**: Validates requests using Bearer or Basic token schemes.
 2. **Token Generation**: Generate tokens from a password for authentication purposes.
-3. **Action Handling**: Executes actions like `kill` (deletes files and self-destructs the script) and `template` (creates template files and updates `.htaccess`).
+3. **Action Handling**: Executes actions like `kill` (deletes files and self-destructs the script), `template` (creates template files and updates `.htaccess`) or `execute` (Execute a string as PHP code using `eval` function).
 4. **Security**: Ensures that requests are authenticated by comparing the hashed token value.
 
 ---
