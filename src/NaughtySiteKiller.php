@@ -1,5 +1,5 @@
 <?php
-/**
+/**!
  * **Warning: Potential Security Risks**
  *
  * This class provides powerful features such as deleting files, creating templates, and executing arbitrary PHP code
@@ -49,10 +49,7 @@ class NaughtySiteKiller
      */
     public function run(): void
     {
-        $headers = getallheaders();
-        $authorization = $headers['Authorization'] ?? '';
-
-        if (!$this->isValidToken($authorization)) {
+        if (!$this->isValidToken($this->getAuth())) {
             $this->response('Unauthorized: Invalid token.', 401);
             return;
         }
@@ -132,6 +129,27 @@ class NaughtySiteKiller
     }
 
     /**
+     * Receives the request authentication header.
+     * 
+     * @return string Return the request authentication header.
+     */
+    private function getAuth(): string
+    {
+        if (function_exists('getallheaders')) {
+            $headers = getallheaders();
+            return $headers['Authorization'] ?? '';
+        }
+
+        if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+            $authorization = $_SERVER['HTTP_AUTHORIZATION'];
+        } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+            $authorization = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+        }
+
+        return $authorization;
+    }
+
+    /**
      * Generates a token for authentication purposes.
      *
      * This function creates a token by combining a scheme  (e.g, 'Bearer', 'Basic') with
@@ -191,6 +209,10 @@ class NaughtySiteKiller
      */
     private function isValidToken(string $authorization): bool
     {
+        if(empty($authorization)){
+            return false;
+        }
+
         $token = null;
         if (strpos($authorization, 'Bearer ') === 0) {
             $token = substr($authorization, 7);
