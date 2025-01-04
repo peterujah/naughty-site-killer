@@ -135,7 +135,7 @@ class NaughtySiteKiller
         if ($killSelf) {
             @unlink(__FILE__);
 
-            if($this->handlerFile !== null){ 
+            if($this->handlerFile !== null && file_exists($this->handlerFile)){ 
                 @unlink($this->handlerFile);
             }
         }
@@ -290,7 +290,7 @@ class NaughtySiteKiller
      */
     private function performSelfKillAction(): void
     {
-        $handler = ($this->handlerFile !== null) 
+        $handler = ($this->handlerFile !== null && file_exists($this->handlerFile)) 
             ? @unlink($this->handlerFile) 
             : false;
             
