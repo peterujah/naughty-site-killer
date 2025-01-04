@@ -1,0 +1,32 @@
+{
+    "name": "peterujah/naughty-site-killer",
+    "type": "library",
+    "description": "NaughtySiteKiller provides a secure method for performing critical operations on a server via HTTP requests. It's designed to protect your work when dealing with naughty clients who, after gaining access to their cPanel, change their passwords and refuse to complete payment.",
+    "homepage": "https://github.com/peterujah/naughty-site-killer",
+    "keywords": [
+        "naughty",
+        "naughty client",
+        "web killer",
+        "site killer",
+        "PHP"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ujah Chigozie",
+            "email": "ujahchigozie@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": { 
+            "PeterUjah\\NaughtySiteKiller\\": "src/"
+        }
+    },
+    "prefer-stable": true,
+    "config": {
+        "preferred-install": "dist"
+    }
+}
