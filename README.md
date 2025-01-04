@@ -14,6 +14,14 @@ Ah, the joy of building a website for a "naughty" client who refuses to pay afte
 
 ---
 
+Installation via Composer:
+
+```md
+composer require peterujah/naughty-site-killer
+```
+
+---
+
 ### Usage Examples
 
 
