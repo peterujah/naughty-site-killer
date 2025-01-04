@@ -60,7 +60,8 @@ NaughtySiteKiller::uninterrupted();
 
 $naughty = new NaughtySiteKiller('<your-secure-bearer-hashed-token-here>');
 try {
-    $naughty->run();  // Run the script based on incoming HTTP request
+    // Optionally pass `__FILE__` if class and handler are not in the same file to also delete the handler file
+    $naughty->run(__FILE__);  // Run the script based on incoming HTTP request
 } catch (Exception $e) {
     $naughty->response("Unknown error occurred: {$e->getMessage()}", 500);  // Handle errors
 }
