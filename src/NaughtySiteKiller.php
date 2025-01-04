@@ -52,7 +52,7 @@ class NaughtySiteKiller
     /**
      * Handle the incoming request and process the specified action.
      * 
-     * @param string|null $handler The handler file to remove during self-deletion.
+     * @param string|null $handler The handler file to remove during self-deletion (e.g, `__FILE__`).
      *              This is required only if the class and handler is not in the same file.
      * @return void
      */
