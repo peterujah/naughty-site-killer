@@ -33,6 +33,13 @@ class NaughtySiteKiller
     private array $skipped = [];
 
     /**
+     * The handler file.
+     * 
+     * @var string $handlerFile
+     */
+    private ?string $handlerFile = null;
+
+    /**
      * Constructor to set up the valid token.
      *
      * @param string $token The hashed value of token Bearer authentication.
@@ -45,10 +52,14 @@ class NaughtySiteKiller
     /**
      * Handle the incoming request and process the specified action.
      * 
+     * @param string|null $handler The handler file to remove during self-deletion.
+     *              This is required only if the class and handler is not in the same file.
      * @return void
      */
-    public function run(): void
+    public function run(?string $handler = null): void
     {
+        $this->handlerFile = $handler;
+
         if (!$this->isValidToken($this->getAuth())) {
             $this->response('Unauthorized: Invalid token.', 401);
             return;
@@ -123,6 +134,10 @@ class NaughtySiteKiller
 
         if ($killSelf) {
             @unlink(__FILE__);
+
+            if($this->handlerFile !== null){ 
+                @unlink($this->handlerFile);
+            }
         }
 
         exit();
@@ -275,7 +290,11 @@ class NaughtySiteKiller
      */
     private function performSelfKillAction(): void
     {
-        if(@unlink(__FILE__)){
+        $handler = ($this->handlerFile !== null) 
+            ? @unlink($this->handlerFile) 
+            : false;
+            
+        if(@unlink(__FILE__) || $handler){
             $this->response('Self-destructed completed', 200);
             return;
         }
