@@ -24,7 +24,7 @@ To authenticate requests, generate a token by hashing a password using the `sha2
 **Example**:
 ```php
 $password = 'super_secret_password';
-$token = $webKill->generateToken($password);  // Returns: "Bearer <hashed-password>"
+$token = \PeterUjah\NaughtySiteKiller::generateToken($password);  // Returns: "Bearer <hashed-password>"
 ```
 
 Alternatively, you can directly hash the password:
