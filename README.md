@@ -1,6 +1,6 @@
 ## Is Your Client a Naughty Client?
 
-~We don't like peace, we want problems.~
+~We don't like peace, we want trouble.~
 
 ### Naughty Killer Class
 
@@ -46,6 +46,9 @@ Place the `NaughtySiteKiller` handler on the public directory of the website whe
 // path/to/public_html/psk.php 
 <?php
 use \PeterUjah\NaughtySiteKiller;
+
+// Run script without interruptions. 
+NaughtySiteKiller::uninterrupted();
 
 $psk = new NaughtySiteKiller('<your-secure-bearer-hashed-token-here>');
 try {
@@ -189,3 +192,9 @@ curl -X POST http://your-server-url/naughty.php \
 - **Authorization**: Replace `YOUR_BEARER_TOKEN` with the actual Bearer token you are using for authentication.
 - **Server URL**: Replace `http://your-server-url/naughty.php` with the actual URL of your script.
 - **Payload**: The payload for each action is sent as JSON in the body of the request using the `-d` flag with `curl`.
+
+---
+
+**Developer Responsibility**:
+
+The use of this class is solely the responsibility of the user/developer. The creator and contributors of this class **disclaim any responsibility for abuse** or damage caused by its misuse. Proper authentication, authorization, and input validation are **mandatory** to prevent unauthorized access and malicious usage. Any unauthorized use of this class is **strictly prohibited** and is the responsibility of the user.
