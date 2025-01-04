@@ -1,6 +1,6 @@
 ## Is Your Client a Naughty Client?
 
-~We don't like peace, we want trouble.~
+~We don't like peace, we want problems.~
 
 ### Naughty Killer Class
 
