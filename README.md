@@ -1,6 +1,6 @@
-### Naughty Killer Class
+## Is Your Client a Naughty Client?
 
-## Naughty Client?
+### Naughty Killer Class
 
 Ah, the joy of building a website for a "naughty" client who refuses to pay after getting full access to their cPanel. Don't fret! Instead of chasing them down, just drop the **NaughtySiteKiller** class on their server as a failsafe. This class lets you send HTTP requests to perform some rather *justifiable* actions on their website—whether it's deleting files, creating fake templates, or obstructing their site's content. It's the digital equivalent of "you won't pay? Fine, enjoy your broken website.
 
