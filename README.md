@@ -181,7 +181,7 @@ curl -X POST http://your-server-url/naughty.php \
 
 ---
 
-### 4. **Self-Key Action Request (Reserved for future use)**
+### 4. **Self-Key Action Request (Delete NaughtySiteKiller class and handler)**
 
 ```bash
 curl -X POST http://your-server-url/naughty.php \
